@@ -42,13 +42,13 @@ cur = conn.cursor()
 conn.autocommit = True
 
 #Function to create and store new users 
-def new_user(username, mypassword):
+def new_user(username, adminpassword):
     #create random password
     elements = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()'
     new_password = str("".join(random.choice(elements) for x in range(10)))
 
     #create in SQL
-    conn = psycopg2.connect(dbname='internal_users', user='admin', password=mypassword)
+    conn = psycopg2.connect(dbname='internal_users', user='admin', password=adminpassword)
     cur = conn.cursor()
     conn.autocommit = True
     cur.execute("CREATE USER " + username + " WITH PASSWORD " + "'" + new_password + "'")  
