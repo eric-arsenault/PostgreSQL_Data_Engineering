@@ -47,7 +47,7 @@ def new_user(username, adminpassword):
     elements = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()'
     new_password = str("".join(random.choice(elements) for x in range(10)))
 
-    #create in SQL
+    #create and permission in SQL
     conn = psycopg2.connect(dbname='internal_users', user='admin', password=adminpassword)
     cur = conn.cursor()
     conn.autocommit = True
