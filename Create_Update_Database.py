@@ -1,6 +1,6 @@
 # This is a basic template for a posgreSQL database with a table to store the users.  At the end of the script 
 # I created a function that takes in a username as well as the admin users password, and the output is creating 
-# a new user in the database as well as storeing the users information on a user table in the database 
+# a new user in the database as well as storing the user info on a user_info table in the database 
 
 from datetime import datetime
 import psycopg2
