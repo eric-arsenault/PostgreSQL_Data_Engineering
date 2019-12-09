@@ -64,8 +64,11 @@ def new_user(username, adminpassword):
     
 
 #create new users
-new_user('fakeemail1@gmail.com')
-new_user('fakeemail2@gmail.com')
-new_user('fakeemail3@gmail.com')
+new_user('username1', 'psw10203040')
+new_user('username2', 'psw10203040')
+new_user('username3', 'psw10203040')
+
+
+
 
 
