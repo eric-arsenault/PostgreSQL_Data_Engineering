@@ -69,7 +69,7 @@ def new_user(username, admin_password):
                                         date_created) 
                                         VALUES """ + str('('+"'"+ID+"'"+", "+"'"+username+"'"+", "+"'"+password+"'"+", "+"'"+"Read"+"'"+", "+str(datetime.datetime.now())+')'))
     conn.close()
-    return "User " + username + " Created on " + str(datetime.datetime.now())
+    return "User Created: " + username 
 
 #create new users
 new_user('username1', 'psw10203040')
