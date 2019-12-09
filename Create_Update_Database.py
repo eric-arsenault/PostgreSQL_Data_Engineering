@@ -49,7 +49,7 @@ def new_user(username):
 
     #create and permission in SQL
     cur.execute("CREATE USER " + username + " WITH PASSWORD " + "'" + new_password + "'")  
-    cur.execute("GRANT SELECT ON user_info TO " + username + '"')
+    cur.execute("GRANT SELECT ON user_info TO " + username)
 
     #create user ID 
     import pandas as pd
