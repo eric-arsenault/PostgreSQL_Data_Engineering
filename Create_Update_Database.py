@@ -41,17 +41,13 @@ cur = conn.cursor()
 conn.autocommit = True
 
 #Function to create new users and store user info
-def new_user(username, admin_password):
+def new_user(username):
     #create random password
     import random
     elements = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()'
     new_password = str("".join(random.choice(elements) for x in range(10)))
 
     #create and permission in SQL
-    import psycopg2
-    conn = psycopg2.connect(dbname='internal_users', user='admin', password=admin_password)
-    cur = conn.cursor()
-    conn.autocommit = True
     cur.execute("CREATE USER " + username + " WITH PASSWORD " + "'" + new_password + "'")  
     cur.execute("GRANT SELECT ON user_info TO " + username + '"')
 
@@ -68,18 +64,17 @@ def new_user(username, admin_password):
                                         permission, 
                                         date_created) 
                                         VALUES """ + str('('+"'"+ID+"'"+", "+"'"+username+"'"+", "+"'"+password+"'"+", "+"'"+"Read"+"'"+", "+str(datetime.datetime.now())+')'))
-    conn.close()
     return "User Created: " + username 
 
 #create new users
-new_user('username1', 'psw10203040')
-new_user('username2', 'psw10203040')
-new_user('username3', 'psw10203040')
+new_user('username1')
+new_user('username2')
+new_user('username3')
 
 #bulk upload function
-def bulk_create(list, admin_password):
+def bulk_create(list):
     for i in list:
-        new_user(i, admin_password)
+        new_user(i)
 
 #create users in bulk
 list = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
