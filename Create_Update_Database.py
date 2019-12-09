@@ -56,8 +56,7 @@ def new_user(username, adminpassword):
 
     #create user ID 
     import pandas as pd
-    df = pd.read_sql_query("""SELECT user_id FROM user_info 
-                            ORDER BY user_id DESC LIMIT 1""", conn)
+    df = pd.read_sql_query("SELECT user_id FROM user_info ORDER BY user_id DESC LIMIT 1", conn)
     ID = int(df['user_id'][0]) + 1
 
     #store in SQL
@@ -75,5 +74,4 @@ def new_user(username, adminpassword):
 new_user('username1', 'psw10203040')
 new_user('username2', 'psw10203040')
 new_user('username3', 'psw10203040')
-
 
