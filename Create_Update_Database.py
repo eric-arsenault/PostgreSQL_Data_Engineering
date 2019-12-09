@@ -41,7 +41,7 @@ conn = psycopg2.connect(dbname='internal_users', user='admin', password='psw1020
 cur = conn.cursor()
 conn.autocommit = True
 
-#Function to create and store new users 
+#Function to create new users and store user info
 def new_user(username, adminpassword):
     #create random password
     elements = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()'
@@ -55,11 +55,18 @@ def new_user(username, adminpassword):
     cur.execute("GRANT SELECT ON user_info TO " + username + '"')
 
     #create user ID 
-    df = pd.read_sql_query("SELECT user_id FROM user_info LIMIT 1 DESC",conn)
+    import pandas as pd
+    df = pd.read_sql_query("""SELECT user_id FROM user_info 
+                            ORDER BY user_id DESC LIMIT 1""", conn)
     ID = int(df['user_id'][0]) + 1
 
     #store in SQL
-    cur.execute("INSERT INTO user_info(user_id, username, password, permission, date_created) VALUES " + ID + " ," + username + " ," + password + " ," + "Read" + " ," + datetime.now())
+    cur.execute("""INSERT INTO user_info(user_id, 
+                                        username, 
+                                        password, 
+                                        permission, 
+                                        date_created) 
+                                        VALUES """ + str('('+"'"+ID+"'"+", "+"'"+username+"'"+", "+"'"+password+"'"+", "+"'"+"Read"+"'"+", "+str(datetime.now())+')'))
     conn.close()
     
 
@@ -67,8 +74,5 @@ def new_user(username, adminpassword):
 new_user('username1', 'psw10203040')
 new_user('username2', 'psw10203040')
 new_user('username3', 'psw10203040')
-
-
-
 
 
