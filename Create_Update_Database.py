@@ -76,3 +76,12 @@ new_user('username1', 'psw10203040')
 new_user('username2', 'psw10203040')
 new_user('username3', 'psw10203040')
 
+#bulk upload function
+def bulk_create(list, admin_password):
+    for i in list:
+        new_user(i, admin_password)
+
+#create users in bulk
+list = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
+bulk_create(list)
+
