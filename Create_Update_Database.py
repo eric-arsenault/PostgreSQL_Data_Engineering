@@ -44,10 +44,12 @@ conn.autocommit = True
 #Function to create new users and store user info
 def new_user(username, admin_password):
     #create random password
+    import random
     elements = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()'
     new_password = str("".join(random.choice(elements) for x in range(10)))
 
     #create and permission in SQL
+    import psycopg2
     conn = psycopg2.connect(dbname='internal_users', user='admin', password=admin_password)
     cur = conn.cursor()
     conn.autocommit = True
@@ -60,15 +62,16 @@ def new_user(username, admin_password):
     ID = int(df['user_id'][0]) + 1
 
     #store in SQL
+    import datetime
     cur.execute("""INSERT INTO user_info(user_id, 
                                         username, 
                                         password, 
                                         permission, 
                                         date_created) 
-                                        VALUES """ + str('('+"'"+ID+"'"+", "+"'"+username+"'"+", "+"'"+password+"'"+", "+"'"+"Read"+"'"+", "+str(datetime.now())+')'))
+                                        VALUES """ + str('('+"'"+ID+"'"+", "+"'"+username+"'"+", "+"'"+password+"'"+", "+"'"+"Read"+"'"+", "+str(datetime.datetime.now())+')'))
     conn.close()
     print('User Created')
-    
+    return "User " + username + " Created on " + str(datetime.datetime.now())
 
 #create new users
 new_user('username1', 'psw10203040')
