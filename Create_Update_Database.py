@@ -53,7 +53,7 @@ def new_user(username):
 
     #create user ID 
     import pandas as pd
-    df = pd.read_sql_query("SELECT user_id FROM user_info ORDER BY user_id DESC LIMIT 1", conn)
+    df = pd.read_sql("SELECT user_id FROM user_info ORDER BY user_id DESC LIMIT 1", conn)
     ID = int(df['user_id'][0]) + 1
 
     #store in SQL
