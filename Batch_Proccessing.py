@@ -12,13 +12,10 @@ os.chdir(r'csv file path')
 df = pd.read_csv('csv file')
 
 # Connect to SQL database 
-sql_conn = pyodbc.connect(driver='{SQL Server Native Client 11.0}',
-
-                            server='postgres',
-
-                            database='postgres',
-
-                            trusted_connection='yes')
+sql_conn = pyodbc.connect(driver='{PostgreSQL Unicode}',
+                          server='postgres',
+                          database='postgres',
+                          trusted_connection='yes')
 
 # Create batch proccessing function 
 def batch_proccess(i, size, seconds):
@@ -30,7 +27,15 @@ def batch_proccess(i, size, seconds):
         yield batch
         time.sleep(seconds)
 
-# Pull data in batches and append to a new list
+# Create empty dataframe for batches to be added to 
+user_list = pd.DataFrame({user_id:[],
+                          username:[], 
+                          password:[], 
+                          permission:[], 
+                          date_created:[],
+                          user_email:[]})
+
+# Pull data in batches and concat with to a total list
 for i in batch_proccess(df['E-mail'], size=100, seconds = 60):
     query = """SELECT u.user_id
                      ,u.username 
@@ -41,9 +46,10 @@ for i in batch_proccess(df['E-mail'], size=100, seconds = 60):
                FROM user_info u
                LEFT JOIN email_table e on e.id = u.user_id
                WHERE e.user_email in """ + str(i)
+    batch = pd.read_sql(query, sql_conn)
+    frames = [user_list, batch]
+    user_list = pd.concat(frames)
     
-    
-    
-    
-    q = pd.read_sql(query, sql_conn)
-    print(q.head(10))
+#Check Results 
+print(user_list.head(10))
+print(user_list.tail(10))
