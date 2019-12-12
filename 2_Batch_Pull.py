@@ -35,7 +35,7 @@ user_list = pd.DataFrame({user_id:[],
                           date_created:[],
                           user_email:[]})
 
-# Pull data in batches and concat with to a total list
+# Pull data in batches and concat with a aggregate list
 for i in batch_proccess(df['E-mail'], size=100, seconds = 60):
     query = """SELECT u.user_id
                      ,u.username 
