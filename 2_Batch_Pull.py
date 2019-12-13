@@ -1,5 +1,6 @@
-# This script was written to pull user info in batches from a list of email addresses that were provided in a CSV file
-# I decided that these should be pulled in batches because I was given about 20,000 email addresses to look up
+# This script was written to pull user info in batches from a list of 100,000 email addresses that were provided in a 
+# CSV file.  I decided that these should be pulled in batches because the only attribute I was given were distinct email 
+# Addresses with different domain names and the tables are too large to pull into memory and filter with Pandas or SQLite.  
  
 import os 
 import pandas as pd  
@@ -36,7 +37,7 @@ user_list = pd.DataFrame({user_id:[],
                           user_email:[]})
 
 # Pull data in batches and concat with a aggregate list
-for i in batch_proccess(df['E-mail'], size=100, seconds = 60):
+for i in batch_proccess(df['E-mail'], size=1000, seconds = 60):
     query = """SELECT u.user_id
                      ,u.username 
                      ,u.password 
