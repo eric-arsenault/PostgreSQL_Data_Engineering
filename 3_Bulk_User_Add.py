@@ -55,7 +55,7 @@ def new_user(username):
 # Create new users in batches 
 for i in batch_proccess(df['New_User_ID'], size=100, seconds = 60):
     for j in i:
-        new_user(i)
+        new_user(j)
 
 
 
