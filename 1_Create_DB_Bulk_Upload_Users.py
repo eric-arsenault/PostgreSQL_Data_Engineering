@@ -1,4 +1,4 @@
-# This is a basic template for a posgreSQL database with a table to store the users.  At the end of the script 
+# This is a template for a posgreSQL database with a table to store the users.  At the end of the script 
 # I have created a function that takes in a username and uses it to create a new user and store the user data 
 # in the user_info table in the database.   
 
@@ -71,12 +71,12 @@ new_user('username1')
 new_user('username2')
 new_user('username3')
 
-# Bulk upload function
-def bulk_upload(list):
+# Mass upload function
+def mass_upload(list):
     for i in list:
         new_user(i)
 
-# Create users in bulk
+# Create users
 list = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
-bulk_upload(list)
+mass_upload(list)
 
