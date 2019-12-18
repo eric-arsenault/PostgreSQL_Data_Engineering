@@ -71,12 +71,12 @@ new_user('username1')
 new_user('username2')
 new_user('username3')
 
-# Mass upload function
-def mass_upload(list):
+# Bulk upload function
+def bulk_upload(list):
     for i in list:
         new_user(i)
 
 # Create users
 list = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
-mass_upload(list)
+bulk_upload(list)
 
