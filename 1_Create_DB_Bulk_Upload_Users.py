@@ -72,11 +72,11 @@ new_user('username2')
 new_user('username3')
 
 # Bulk upload function
-def bulk_upload(list):
-    for i in list:
+def bulk_upload(user_list):
+    for i in user_list:
         new_user(i)
 
 # Create users
-list = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
-bulk_upload(list)
+new_usernames = ['username4', 'username5', 'username6', 'username7', 'username8', 'username9', 'username10']
+bulk_upload(new_usernames)
 
