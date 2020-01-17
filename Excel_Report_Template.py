@@ -1,14 +1,21 @@
 #%%
 #########################################################################################################################################################
 #This template:
-    -Pulls a user list report from either DB1 or DB2, 
-    -Transforms the date values to a form compatible with excel date format (short date and long date)  
-    -Writes the data to an excel sheet
-    -Uploads it to a file path.  
+#    -Pulls a user list report from either DB1 or DB2
+#    -Transforms the date values to a form compatible with excel date format (short date and long date)  
+#    -Writes the data to an excel sheet
+#    -Uploads it to a file path  
+#
+# Date formats from DB1 are:
+#    -2020-01-01 01:01:01.111
+#
+# Date formats from DB2 are:
+#    -Jan 15 2020 11:06AM
+#    -2020-01-01 01:01:01.111
 #########################################################################################################################################################
 file_path = r"C:\Users\XXXXX\XXXXXX\XXXXX"
 file_name = "Test"
-system = 'DB1'  
+system = "DB1"  
 query = """XXXXXX"""
 #########################################################################################################################################################
 
@@ -185,4 +192,4 @@ def pull_fix_save_data(system, query, file_name, file_path):
              
 pull_fix_save_data(system, query, file_name, file_path)  
 
-             
+            
