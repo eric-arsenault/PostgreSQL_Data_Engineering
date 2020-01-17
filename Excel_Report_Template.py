@@ -6,7 +6,7 @@
 #    -Writes the data to an excel sheet
 #    -Uploads it to a file path  
 #
-# Date formats from DB1 are:
+# Date format from DB1 is:
 #    -2020-01-01 01:01:01.111
 #
 # Date formats from DB2 are:
