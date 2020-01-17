@@ -2,7 +2,7 @@
 ###################################################################
 ###################################################################
 # I wrote these functions to fix the way dates came out of a database that I 
-# was using for this project, as well as writing the data to excel sheets.   
+# was using for this project.   
 ###################################################################
 ###################################################################
 
