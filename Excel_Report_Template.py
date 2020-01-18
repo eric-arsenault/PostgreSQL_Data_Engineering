@@ -44,18 +44,16 @@ def pull_fix_save_data(system, query, file_name, file_path):
         for index, value in enumerate(column_names):
             if 'login' in value:
                 x = index
-                df2 = df.iloc[:, x].str.split(n = 1, expand = True)
-                df3 = df2.iloc[:, 1].str.split(n = 1, expand = True)
-                df4 = df3.iloc[:, 1].str.split(n = 1, expand = True)
+                df2 = df.iloc[:, x].str.split(" ", expand = True)
                 
                 d = {'Jan':'1', 'Feb':'2', 'Mar':'3', 'Apr':'4', 'May':'5', 'Jun':'6', 'Jul':'7', 'Aug':'8', 'Sep':'9', 'Oct':'10', 'Nov':'11', 'Dec':'12' }
                 df2[0] = df2[0].map(d)
-                df4[2] = df2[0] + "/" + df3[0] + "/" + df4[0] 
-                df4[2] = df4[2].astype(str)
+                df2[4] = df2[0] + "/" + df2[1] + "/" + df2[2] 
+                df2[4] = df2[4].astype(str)
                 df.drop(df.columns[x],axis=1,inplace=True)
 
                 new_last_login = []
-                for i in df4[2]:
+                for i in df2[4]:
                     if str(i) == 'nan':
                         new_last_login.append("")
                     elif str(i) == "":
