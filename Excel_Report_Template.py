@@ -92,6 +92,7 @@ def pull_fix_save_data(system, query, file_name, file_path):
                                 server='XXXXX',
                                 database='XXXXX',
                                 trusted_connection='yes')
+        
         df = pd.read_sql(query, sql_conn)
         df.fillna("", inplace = True)
 
