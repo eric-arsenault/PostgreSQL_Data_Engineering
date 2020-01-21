@@ -98,7 +98,6 @@ def pull_fix_save_data(system, query, file_name, file_path):
         column_names = [] 
         for i in df.columns:
             column_names.append(i.lower())
-        
         for index, value in enumerate(column_names):
             if "login" in value:
                 x = index
@@ -110,7 +109,6 @@ def pull_fix_save_data(system, query, file_name, file_path):
                 df2[0] = df2[0].map(d)
                 df2[4] = df2[0] + "/" + df3[0] + "/" + df4[0] 
                 df2[4] = df2[4].astype(str)
-                df.drop(df.columns[x],axis=1,inplace=True)
 
                 new_last_login = []
                 for i in df2[4]:
@@ -120,6 +118,7 @@ def pull_fix_save_data(system, query, file_name, file_path):
                         new_last_login.append("")
                     else:new_last_login.append(str(datetime.datetime.strptime(i, '%m/%d/%Y').date()))
                     
+                df.drop(df.columns[x],axis=1,inplace=True)                
                 df["Last Login"] = new_last_login
 
         for index, value in enumerate(column_names):
