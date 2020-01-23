@@ -30,6 +30,8 @@ def fix_short_date(df, column):
             new_list.append("")  
         elif str(i) == "nan":
             new_list.append("")
+        elif str(i) == "NaT":
+            new_list.append("")
         else: new_list.append(datetime.datetime.strptime(i, '%m-%d-%Y').date())   
     df.drop(columns = column, inplace = True)
     df[column] = new_list
@@ -48,6 +50,8 @@ def fix_long_date(df, column):
         if str(i) == "":
             new_list.append("")  
         elif str(i) == "nan":
+            new_list.append("")
+        elif str(i) == "NaT":
             new_list.append("")
         else: new_list.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
     df.drop(columns = column, inplace = True)
