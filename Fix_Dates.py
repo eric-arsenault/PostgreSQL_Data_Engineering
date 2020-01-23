@@ -1,7 +1,9 @@
 #%%
 ########################################################################################################
 ########################################################################################################
-# I wrote these functions to fix the way dates came out of a database that I was using for this project.   
+# I wrote these functions to fix the way dates came out of a databases that I was using for this project.
+# The goal of these functions is to write the date in a format that excel will format as a date, 
+# so the end user can change date formats and filter by date.
 #
 # Date format from DB1 is:
 #    -2020-01-01 01:01:01.111
@@ -12,80 +14,41 @@
 ########################################################################################################
 ########################################################################################################
 
-def fix_DB1(dataframe):
-    #Last Login
-    new_last_login = []
-    dataframe.fillna("", inplace = True)
-    dataframe['date_login_succeeded'] = dataframe['date_login_succeeded'].astype(str)
-    dataframe2 = dataframe['date_login_succeeded'].str.split(" ", expand = True )
-    dataframe3 = dataframe2[0].str.split("-", expand = True )
-    dataframe3[3] = dataframe3[1] + str("/") + dataframe3[2] + str("/") + dataframe3[0]
-    dataframe3.fillna("", inplace = True)
-    dataframe3[3] = dataframe3[3].astype(str)
-    
-    for i in dataframe3[3]:
-        if i == "":
-            new_last_login.append("")
-        else: new_last_login.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
-    
-    dataframe.drop(columns = ['date_login_succeeded'], inplace = True)
-    dataframe["Last Login"] = new_last_login
-    
-    #Date Created 
-    new_date_created = []
-    dataframe['date_created'] = dataframe['date_created'].astype(str)
-    dataframe4 = dataframe['date_created'].str.split(" ", expand = True )
-    dataframe5 = dataframe4[0].str.split("-", expand = True )
-        
-    dataframe5[3] = dataframe5[1] + str("/") + dataframe5[2] + str("/") + dataframe5[0]
-    dataframe3.fillna("", inplace = True)
-    dataframe5[3] = dataframe5[3].astype(str)
-    
-    for i in dataframe5[3]:
-        if i == "":
-            new_date_created.append("")
-        else: new_date_created.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
-    
-    dataframe.drop(columns = ['date_created'], inplace = True)
-    dataframe["Date Created"] = new_date_created
- 
-def fix_DB2(dataframe):
-    #Last Login
-    new_last_login = []
-    dataframe.fillna("", inplace = True)
-    dataframe['lastlogin'] = dataframe['lastlogin'].astype(str)
-    dataframe2 = dataframe['lastlogin'].str.split(n=1, expand = True )
-    dataframe3 = dataframe2[1].str.split(" ", expand = True)
-    d = {'Jan':'1', 'Feb':'2', 'Mar':'3', 'Apr':'4', 'May':'5', 'Jun':'6', 'Jul':'7', 'Aug':'8', 'Sep':'9', 'Oct':'10', 'Nov':'11', 'Dec':'12'}
-    dataframe2[0] = dataframe2[0].map(d)
-    dataframe2[6] = dataframe2[0] + str("/") + dataframe3[0] + str("/") + dataframe3[1]
-    dataframe2.fillna("", inplace = True)   
-    dataframe2[6] = dataframe2[6].astype(str)
-    
-    for i in dataframe2[6]:
-        if i == "":
-            new_last_login.append("")
-        else: new_last_login.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
-    
-    dataframe.drop(columns = ['lastlogin'], inplace = True)
-    dataframe["Last Login"] = new_last_login
-    
-    #Date Created
-    new_date_created = []
-    dataframe['Date Created'] = dataframe['Date Created'].astype(str)
-    dataframe3 = dataframe['Date Created'].str.split(n = 1, expand = True )
-    dataframe4 = dataframe3[0].str.split("-", expand = True ) 
-    dataframe4[3] = dataframe4[1] + str("/") + dataframe4[2] + str("/") + dataframe4[0]
-    dataframe4.fillna("", inplace = True)
-    dataframe4[3] = dataframe4[3].astype(str)
-   
-    for i in dataframe4[3]:
-        if i == "":
-            new_date_created.append("")
-        else: new_date_created.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
-    
-    dataframe.drop(columns = ['Date Created'], inplace = True)
-    dataframe["Date Created"] = new_date_created
+#this function is used when iterating through columns and date format is: 2020-01-01 01:01:01.111
+def XLdate(x):
+    return datetime.datetime.strptime(x, '%m/%d/%Y').date()
 
+#this function treats an entire column that is in format: 2020-01-01 01:01:01.111
+def fix_short_date(df, column):
+    df[column] = pd.to_datetime(df[column])
+    df[column] = df[column].dt.date
+    df[column] = pd.to_datetime(df[column]).dt.strftime('%m-%d-%Y')
+    df[column] = df[column].astype(str)
+    new_list = []
+    for i in df[column]:
+        if str(i) == "":
+            new_list.append("")  
+        elif str(i) == "nan":
+            new_list.append("")
+        else: new_list.append(datetime.datetime.strptime(i, '%m-%d-%Y').date())   
+    df.drop(columns = column, inplace = True)
+    df[column] = new_list
 
-
+#this function treats an entire column that is in format: Jan 15 2020 11:06AM
+def fix_long_date(df, column):
+    df[column] = df[column].astype(str)
+    df2 = df[column].str.split(n = 1, expand = True)
+    df3 = df2[1].str.split(n = 1, expand = True)
+    df4 = df3[1].str.split(n = 1, expand = True)
+    d = {'Jan':'1', 'Feb':'2', 'Mar':'3', 'Apr':'4', 'May':'5', 'Jun':'6', 'Jul':'7', 'Aug':'8', 'Sep':'9', 'Oct':'10', 'Nov':'11', 'Dec':'12' }
+    df2[0] = df2[0].map(d)
+    df2[2] = df2[0] + "/" + df3[0] + "/" + df4[0]
+    new_list = []
+    for i in df2[2]:
+        if str(i) == "":
+            new_list.append("")  
+        elif str(i) == "nan":
+            new_list.append("")
+        else: new_list.append(datetime.datetime.strptime(i, '%m/%d/%Y').date())
+    df.drop(columns = column, inplace = True)
+    df[column] = new_list
