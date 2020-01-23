@@ -15,7 +15,7 @@
 ########################################################################################################
 
 #this function is used when iterating through columns and date format is: 2020-01-01 01:01:01.111
-def XLdate(x):
+def excel_date(x):
     return datetime.datetime.strptime(x, '%m/%d/%Y').date()
 
 #this function treats an entire column that is in format: 2020-01-01 01:01:01.111
