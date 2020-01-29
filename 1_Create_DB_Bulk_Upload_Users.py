@@ -23,9 +23,9 @@ cur.execute(
     """
     CREATE TABLE user_info (
         user_id INTEGER PRIMARY KEY,
-        username VARCHAR(10)
-        password VARCHAR(10)
-        permission VARCHAR(32)
+        username VARCHAR(10),
+        password VARCHAR(10),
+        permission VARCHAR(32),
         date_created TIMESTAMP
         )
     """
